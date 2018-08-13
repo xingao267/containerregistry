@@ -103,7 +103,8 @@ def multi_image_tarball(
             # We don't just exclude the empty tar because we leave its diff_id
             # in the set when coming through v2_compat.V22FromV2
             for layer_id in reversed(v1_img.ancestry(v1_img.top()))
-            if _diff_id(v1_img, layer_id) in diffs
+            if _diff_id(v1_img, layer_id) in diffs and
+            not json.loads(v1_img.json(layer_id)).get('throwaway')
         ],
         'RepoTags': [str(tag)]
     }
